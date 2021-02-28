@@ -16,13 +16,13 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use(
-  "/assets/product_images/laptops",
-  express.static(path.join(__dirname, "assets", "product_images", "laptops"))
+  "/assets/product_images/laptop",
+  express.static(path.join(__dirname, "assets", "product_images", "laptop"))
 );
 
 app.use(
-  "/assets/product_images/phones",
-  express.static(path.join(__dirname, "assets", "product_images", "phones"))
+  "/assets/product_images/smart-phone",
+  express.static(path.join(__dirname, "assets", "product_images", "smart-phone"))
 );
 
 mongoose.connect(process.env.MONGO_ATLAS_URI, {
