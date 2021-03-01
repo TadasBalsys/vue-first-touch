@@ -3,14 +3,14 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/catalog">Catalog</router-link> |
     <router-link to="/cart"
-      >Cart {{ this.cart.length ? `(${this.countTotal()})` : "" }}</router-link
-    >
+      >Cart {{ this.cart.length ? `(${this.countTotal()})` : "" }}
+    </router-link>
+    <router-view
+      :addToCart="addToCart"
+      :cart="cart"
+      :cartTotal="this.countTotal()"
+    />
   </div>
-  <router-view
-    :addToCart="addToCart"
-    :cart="cart"
-    :cartTotal="this.countTotal()"
-  />
 </template>
 
 <script>
@@ -22,16 +22,16 @@ export default {
     };
   },
   methods: {
-    addToCart(id) {
-      const indexOfFoundedItemInCart = this.cart.findIndex(
-        (item) => item.id === id
-      );
+    addToCart(itemToAdd) {
+      const indexOfFoundedItemInCart = this.cart.findIndex((item) => {
+        return item._id === itemToAdd._id;
+      });
 
       if (indexOfFoundedItemInCart > -1) {
         return this.cart[indexOfFoundedItemInCart].qauntity++;
       }
 
-      this.cart.push({ id: id, qauntity: 1 });
+      this.cart.push({ ...itemToAdd, qauntity: 1 });
     },
     countTotal() {
       return this.cart.reduce((acc, val) => acc + val.qauntity, 0);

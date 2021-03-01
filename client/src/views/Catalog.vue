@@ -8,7 +8,7 @@
         "
         :alt="product.name"
       />
-      <button v-on:click="addToCart(product._id)">Add to Cart</button>
+      <button v-on:click="addToCart(product)">Add to Cart</button>
     </div>
   </div>
 </template>
