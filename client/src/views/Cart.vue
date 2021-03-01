@@ -1,6 +1,9 @@
 <template>
   <div>
     <h2>Cart Page</h2>
+    <div>
+      <div class="total-price">Total: {{ totalPrice }} &euro;</div>
+    </div>
     <div class="product-box" :key="product._id" v-for="product in cart">
       <img
         :src="
@@ -17,7 +20,7 @@
           {{ product.price * product.qauntity }} &euro;</span
         >
       </div>
-      <button v-on:click="addToCart(product._id)">Remove</button>
+      <button v-on:click="removeFromCart(product._id)">Remove</button>
     </div>
   </div>
 </template>
@@ -29,11 +32,32 @@ export default {
   props: {
     cart: Array,
     cartTotal: String,
+    removeFromCart: Function,
+  },
+  data() {
+    return {
+      totalPrice: 0,
+    };
+  },
+
+  created() {
+    const cartItemsTotalPrice = this.cart.reduce(
+      (acc, val) => acc + val.price * val.qauntity,
+      0
+    );
+    this.totalPrice = cartItemsTotalPrice;
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.total-price {
+  max-width: 60%;
+  margin: 0 auto 1rem;
+  text-align: end;
+  font-size: 1.5rem;
+}
+
 .product-box {
   display: flex;
   max-width: 60%;

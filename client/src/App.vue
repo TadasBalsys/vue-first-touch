@@ -9,6 +9,7 @@
       :addToCart="addToCart"
       :cart="cart"
       :cartTotal="this.countTotal()"
+      :removeFromCart="removeFromCart"
     />
   </div>
 </template>
@@ -32,6 +33,26 @@ export default {
       }
 
       this.cart.push({ ...itemToAdd, qauntity: 1 });
+    },
+    removeFromCart(id) {
+
+      // TODO: Left here.
+      // const updateCart = this.cart.filter((item) => {
+      //   if (item._id === id) {
+      //     if (item.qauntity > 1) {
+      //       return { ...item, qauntity: item.qauntity - 1 };
+      //     }
+      //     if (item.qauntity === 1) {
+      //       console.log("if statement when last ");
+      //       return false;
+      //     }
+      //   }
+      //   return true;
+      // });
+
+      console.log(updateCart);
+
+      this.cart = updateCart;
     },
     countTotal() {
       return this.cart.reduce((acc, val) => acc + val.qauntity, 0);
