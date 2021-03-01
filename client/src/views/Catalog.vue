@@ -1,9 +1,14 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-    <div :key="product._id" v-for="product in products">
-      <h2>{{ product.name }}</h2>
-      <img :src="`http://localhost:3000/assets/product_images/${product.category}/${product.img}`" :alt="product.name">
+  <div class="container">
+    <div class="product" :key="product._id" v-for="product in products">
+      <h3>{{ product.name }}</h3>
+      <img
+        :src="
+          `http://localhost:3000/assets/product_images/${product.category}/${product.img}`
+        "
+        :alt="product.name"
+      />
+      <button v-on:click="addToCart(product._id)">Add to Cart</button>
     </div>
   </div>
 </template>
@@ -12,7 +17,11 @@
 import axios from "axios";
 
 export default {
-  name: "About",
+  name: "Catalog",
+  props: {
+    cart: Array,
+    addToCart: Function,
+  },
   data() {
     return {
       products: [],
@@ -20,14 +29,47 @@ export default {
   },
   async mounted() {
     const res = await axios.get("http://localhost:3000/products/get-products");
-    this.products = res.data;
+    const sortedProducts = res.data.sort((a, b) => {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (b.name > a.name) {
+        return -1;
+      }
+      return 0;
+    });
+
+    this.products = sortedProducts;
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  img {
-    max-width: 18.75rem;
-    width: 100%;
-  }
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+img {
+  max-width: 18.75rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+button {
+  align-self: center;
+  max-width: 10rem;
+  padding: 0.5rem 0.8rem;
+  background-color: #447ee0;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 5px;
+}
 </style>

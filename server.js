@@ -4,10 +4,11 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
-const path = require('path');
+const path = require("path");
 const PORT = process.env.PORT || 3000;
 
 const productRoutes = require("./routes/products");
+const cartRoutes = require("./routes/cart");
 
 const app = express();
 
@@ -22,7 +23,9 @@ app.use(
 
 app.use(
   "/assets/product_images/smart-phone",
-  express.static(path.join(__dirname, "assets", "product_images", "smart-phone"))
+  express.static(
+    path.join(__dirname, "assets", "product_images", "smart-phone")
+  )
 );
 
 mongoose.connect(process.env.MONGO_ATLAS_URI, {
@@ -38,5 +41,6 @@ connection.once("open", () => {
 });
 
 app.use("/products", productRoutes);
+app.use("/cart", cartRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
