@@ -8,8 +8,8 @@
     <router-view
       :addToCart="addToCart"
       :cart="cart"
-      :cartTotal="this.countTotal()"
       :removeFromCart="removeFromCart"
+      :totalPrice="countTotalPrice()"
     />
   </div>
 </template>
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       cart: [],
+      totalPrice: 0,
     };
   },
   methods: {
@@ -43,6 +44,13 @@ export default {
     },
     countTotal() {
       return this.cart.reduce((acc, val) => acc + val.qauntity, 0);
+    },
+    countTotalPrice() {
+      const cartItemsTotalPrice = this.cart.reduce(
+        (acc, val) => acc + val.price * val.qauntity,
+        0
+      );
+       return cartItemsTotalPrice;
     },
   },
 };

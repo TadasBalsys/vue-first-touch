@@ -20,32 +20,18 @@
           {{ product.price * product.qauntity }} &euro;</span
         >
       </div>
-      <button v-on:click="removeFromCart(product._id)">Remove</button>
+      <button @click="removeFromCart(product._id)">Remove</button>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Cart",
   props: {
     cart: Array,
-    cartTotal: String,
     removeFromCart: Function,
-  },
-  data() {
-    return {
-      totalPrice: 0,
-    };
-  },
-
-  created() {
-    const cartItemsTotalPrice = this.cart.reduce(
-      (acc, val) => acc + val.price * val.qauntity,
-      0
-    );
-    this.totalPrice = cartItemsTotalPrice;
+    totalPrice: Number,
   },
 };
 </script>

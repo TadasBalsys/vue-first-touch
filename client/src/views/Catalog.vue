@@ -1,19 +1,30 @@
 <template>
   <div class="container">
-    <div class="product" :key="product._id" v-for="product in products">
-      <h3>{{ product.name }}</h3>
-      <img
-        :src="
-          `http://localhost:3000/assets/product_images/${product.category}/${product.img}`
-        "
-        :alt="product.name"
-      />
-      <button v-on:click="addToCart(product)">Add to Cart</button>
+    <CategorySelector :handlerCategorySelector="handleCetegorySelect" />
+    <div class="product__list">
+      <div :key="product._id" v-for="product in products">
+        <div
+          class="product"
+          v-if="
+            selectedCategory === 'all' || selectedCategory === product.category
+          "
+        >
+          <h3>{{ product.name }}</h3>
+          <img
+            :src="
+              `http://localhost:3000/assets/product_images/${product.category}/${product.img}`
+            "
+            :alt="product.name"
+          />
+          <button v-on:click="addToCart(product)">Add to Cart</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import CategorySelector from "../components/CategorySelector";
 import axios from "axios";
 
 export default {
@@ -22,9 +33,13 @@ export default {
     cart: Array,
     addToCart: Function,
   },
+  components: {
+    CategorySelector,
+  },
   data() {
     return {
       products: [],
+      selectedCategory: "all",
     };
   },
   async mounted() {
@@ -41,11 +56,16 @@ export default {
 
     this.products = sortedProducts;
   },
+  methods: {
+    handleCetegorySelect(category) {
+      this.selectedCategory = category;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.container {
+.product__list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
