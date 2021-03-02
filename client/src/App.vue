@@ -15,6 +15,7 @@
 </template>
 
 <script>
+
 export default {
   name: "App",
   data() {
@@ -23,6 +24,7 @@ export default {
       totalPrice: 0,
     };
   },
+  persist: ['cart'],
   methods: {
     addToCart(itemToAdd) {
       const indexOfFoundedItemInCart = this.cart.findIndex((item) => {
@@ -50,7 +52,7 @@ export default {
         (acc, val) => acc + val.price * val.qauntity,
         0
       );
-       return cartItemsTotalPrice;
+      return cartItemsTotalPrice;
     },
   },
 };
