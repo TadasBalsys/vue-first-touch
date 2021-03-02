@@ -35,24 +35,11 @@ export default {
       this.cart.push({ ...itemToAdd, qauntity: 1 });
     },
     removeFromCart(id) {
+      const index = this.cart.findIndex((item) => item._id === id);
 
-      // TODO: Left here.
-      // const updateCart = this.cart.filter((item) => {
-      //   if (item._id === id) {
-      //     if (item.qauntity > 1) {
-      //       return { ...item, qauntity: item.qauntity - 1 };
-      //     }
-      //     if (item.qauntity === 1) {
-      //       console.log("if statement when last ");
-      //       return false;
-      //     }
-      //   }
-      //   return true;
-      // });
-
-      console.log(updateCart);
-
-      this.cart = updateCart;
+      return this.cart[index].qauntity > 1
+        ? this.cart[index].qauntity--
+        : this.cart.splice(index, 1);
     },
     countTotal() {
       return this.cart.reduce((acc, val) => acc + val.qauntity, 0);
