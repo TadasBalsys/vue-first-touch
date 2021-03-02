@@ -32,24 +32,24 @@ export default {
       });
 
       if (indexOfFoundedItemInCart > -1) {
-        return this.cart[indexOfFoundedItemInCart].qauntity++;
+        return this.cart[indexOfFoundedItemInCart].quantity++;
       }
 
-      this.cart.push({ ...itemToAdd, qauntity: 1 });
+      this.cart.push({ ...itemToAdd, quantity: 1 });
     },
     removeFromCart(id) {
       const index = this.cart.findIndex((item) => item._id === id);
 
-      return this.cart[index].qauntity > 1
-        ? this.cart[index].qauntity--
+      return this.cart[index].quantity > 1
+        ? this.cart[index].quantity--
         : this.cart.splice(index, 1);
     },
     countTotal() {
-      return this.cart.reduce((acc, val) => acc + val.qauntity, 0);
+      return this.cart.reduce((acc, val) => acc + val.quantity, 0);
     },
     countTotalPrice() {
       const cartItemsTotalPrice = this.cart.reduce(
-        (acc, val) => acc + val.price * val.qauntity,
+        (acc, val) => acc + (val.price * val.quantity),
         0
       );
       return cartItemsTotalPrice;
