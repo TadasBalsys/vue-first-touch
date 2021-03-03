@@ -4,10 +4,10 @@
     <div class="top-menu">
       <div class="total-price">Total: {{ totalPrice }} &euro;</div>
       <button class="wishlist__btn-save" @click="saveWishList">
-        Save Cart to wishlist
+        Save Cart to wishlist:
       </button>
       <div class="wishlist__link-box" v-if="wishListUrl.length">
-        <span>Share your wish list</span>
+        <span id="link-title">Share your wish list</span>
         <span>{{ wishListUrl }}</span>
       </div>
     </div>
@@ -48,8 +48,9 @@ export default {
         "http://localhost:3000/cart/save-wish-list",
         { products: reqBody }
       );
+      const wishListId = res.data;
 
-      this.wishListUrl = `http://localhost:8080/cart/${res.data}`;
+      this.wishListUrl = `http://localhost:8080/wish-list?id=${wishListId}`;
     },
   },
 };
@@ -80,5 +81,9 @@ export default {
 .product-box {
   max-width: 60%;
   margin: 0 auto 2rem;
+}
+
+#link-title {
+  margin-right: 0.8rem;
 }
 </style>

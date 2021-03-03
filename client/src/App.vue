@@ -2,29 +2,34 @@
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/catalog">Catalog</router-link> |
-    <router-link to="/cart"
-      >Cart {{ this.cart.length ? `(${this.countTotal()})` : "" }}
+    <router-link to="/cart">
+      Cart {{ this.cart.length ? `(${this.countTotal()})` : "" }}
+    </router-link>
+    |
+    <router-link to="/wish-list" params="params: {id: wishListId}" >
+      Wish List
     </router-link>
     <router-view
       :addToCart="addToCart"
       :cart="cart"
       :removeFromCart="removeFromCart"
       :totalPrice="countTotalPrice()"
+      :wishListId="wishListId"
     />
   </div>
 </template>
 
 <script>
-
 export default {
   name: "App",
   data() {
     return {
       cart: [],
       totalPrice: 0,
+      wishListId: null
     };
   },
-  persist: ['cart'],
+  persist: ["cart"],
   methods: {
     addToCart(itemToAdd) {
       const indexOfFoundedItemInCart = this.cart.findIndex((item) => {
@@ -49,7 +54,7 @@ export default {
     },
     countTotalPrice() {
       const cartItemsTotalPrice = this.cart.reduce(
-        (acc, val) => acc + (val.price * val.quantity),
+        (acc, val) => acc + val.price * val.quantity,
         0
       );
       return cartItemsTotalPrice;
